@@ -4,13 +4,20 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createServer } from '../server/index';
 import serverless from 'serverless-http';
 
-// Create Express app
-const app = createServer();
+// Create Express app instance
+let app: ReturnType<typeof createServer> | null = null;
+let handler: ReturnType<typeof serverless> | null = null;
 
-// Wrap Express app with serverless-http
-const handler = serverless(app, {
-  binary: ['image/*', 'application/pdf'],
-});
+// Initialize app and handler lazily
+function getHandler() {
+  if (!app) {
+    app = createServer();
+    handler = serverless(app, {
+      binary: ['image/*', 'application/pdf'],
+    });
+  }
+  return handler!;
+}
 
 export default async function (req: VercelRequest, res: VercelResponse) {
   // Set CORS headers
@@ -24,11 +31,15 @@ export default async function (req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    // Handle the request
-    return await handler(req, res);
+    // Get handler and process request
+    const requestHandler = getHandler();
+    return await requestHandler(req, res);
   } catch (error) {
     console.error('API Error:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ 
+      error: 'Internal server error',
+      message: error instanceof Error ? error.message : String(error)
+    });
   }
 }
 

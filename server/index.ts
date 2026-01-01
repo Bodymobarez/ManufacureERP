@@ -1,9 +1,11 @@
 // Load environment variables
-if (typeof process !== 'undefined' && process.env) {
+// In Vercel, environment variables are automatically available
+// Only load dotenv in development or local environments
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
   try {
     require('dotenv/config');
   } catch (e) {
-    // dotenv not available in serverless environment
+    // dotenv not available
   }
 }
 import express from "express";
