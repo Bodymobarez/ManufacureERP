@@ -2,7 +2,6 @@
   "buildCommand": "pnpm vercel-build",
   "outputDirectory": "dist/spa",
   "installCommand": "pnpm install",
-  "framework": null,
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -33,3 +32,4 @@
     }
   ]
 }
+
