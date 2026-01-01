@@ -4,15 +4,10 @@
   "outputDirectory": "dist/spa",
   "installCommand": "pnpm install",
   "framework": "vite",
-  "functions": {
-    "api/index.ts": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/index.ts"
+      "destination": "/api"
     },
     {
       "source": "/(.*)",

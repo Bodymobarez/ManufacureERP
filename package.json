@@ -23,7 +23,8 @@
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
-    "vercel-build": "pnpm db:generate && pnpm build:client"
+    "vercel-build": "pnpm db:generate && pnpm build:client",
+    "postinstall": "pnpm db:generate"
   },
   "dependencies": {
     "@prisma/client": "^7.2.0",
