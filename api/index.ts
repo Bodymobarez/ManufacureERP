@@ -6,9 +6,7 @@ import serverless from 'serverless-http';
 
 // Initialize Express app and handler
 const app = createServer();
-const handler = serverless(app, {
-  binary: ['image/*', 'application/pdf'],
-});
+const handler = serverless(app);
 
 export default async function (req: VercelRequest, res: VercelResponse) {
   // Set CORS headers
@@ -32,4 +30,3 @@ export default async function (req: VercelRequest, res: VercelResponse) {
     });
   }
 }
-
