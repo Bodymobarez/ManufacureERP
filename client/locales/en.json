@@ -1,0 +1,248 @@
+{
+  "header": {
+    "plm": "PLM",
+    "inventory": "Inventory",
+    "production": "Production",
+    "quality": "Quality",
+    "hrm": "HRM",
+    "accounting": "Accounting",
+    "procurement": "Procurement",
+    "sales": "Sales",
+    "dashboard": "Dashboard",
+    "iot": "IoT"
+  },
+  "home": {
+    "badge": "🏭 Enterprise Manufacturing ERP",
+    "mainTitle": "Complete Garment",
+    "mainTitleHighlight": "Manufacturing Platform",
+    "description": "Unified system for managing production, inventory, quality, costs, and people. From raw materials to finished goods, control your entire manufacturing operation with real-time visibility.",
+    "ctaPrimary": "Go to Dashboard",
+    "ctaSecondary": "Explore Modules",
+    "stats": {
+      "modules": "Core Modules",
+      "visibility": "Visibility",
+      "multiFactory": "Facility Ready",
+      "compliant": "Compliant"
+    },
+    "modulesSection": "All Modules in One Platform",
+    "modulesSectionDesc": "Complete integration from design to delivery. Manage every aspect of garment manufacturing in a unified system."
+  },
+  "common": {
+    "exploreModule": "Explore Module",
+    "learnMore": "Learn More",
+    "getStarted": "Get Started"
+  },
+  "modules": {
+    "plm": {
+      "title": "PLM",
+      "subtitle": "Product Lifecycle Management",
+      "description": "Manage designs, tech packs, BOMs, size charts, and version control",
+      "features": {
+        "f1": "Design management and tech pack creation",
+        "f2": "Bill of Materials (BOM) management",
+        "f3": "Size chart and grading rules",
+        "f4": "Version control and change tracking",
+        "f5": "Sample management and approval workflow",
+        "f6": "Fabric and trim library",
+        "f7": "Cost estimation and analysis",
+        "f8": "Collaboration tools for design teams"
+      }
+    },
+    "inventory": {
+      "title": "Inventory",
+      "subtitle": "Warehouse Management",
+      "description": "Raw materials, fabrics, batch tracking, multi-warehouse operations",
+      "features": {
+        "f1": "Multi-warehouse management",
+        "f2": "Batch and lot tracking",
+        "f3": "Raw material and fabric inventory",
+        "f4": "Stock level monitoring and alerts",
+        "f5": "Barcode and RFID support",
+        "f6": "Inventory valuation methods (FIFO, LIFO, Avg)",
+        "f7": "Stock transfer between locations",
+        "f8": "Inventory adjustment and reconciliation"
+      }
+    },
+    "production": {
+      "title": "Production",
+      "subtitle": "Manufacturing Execution",
+      "description": "Cutting, sewing, finishing, work orders, real-time progress tracking",
+      "features": {
+        "f1": "Work order management",
+        "f2": "Production planning and scheduling",
+        "f3": "Cutting room operations",
+        "f4": "Sewing line tracking",
+        "f5": "Finishing and packing operations",
+        "f6": "Real-time production monitoring",
+        "f7": "Labor efficiency tracking",
+        "f8": "Production reporting and analytics"
+      }
+    },
+    "iot": {
+      "title": "IoT & Machines",
+      "subtitle": "Connected Equipment",
+      "description": "Machine registry, capacity tracking, OEE metrics, maintenance alerts",
+      "features": {
+        "f1": "Machine registry and asset management",
+        "f2": "Real-time machine monitoring",
+        "f3": "OEE (Overall Equipment Effectiveness) tracking",
+        "f4": "Predictive maintenance alerts",
+        "f5": "Energy consumption monitoring",
+        "f6": "Sensor data collection and analysis",
+        "f7": "Machine downtime tracking",
+        "f8": "Capacity utilization reports"
+      }
+    },
+    "quality": {
+      "title": "Quality Control",
+      "subtitle": "Quality Assurance",
+      "description": "Incoming, in-line, final inspections, AQL standards, QC reports",
+      "features": {
+        "f1": "Incoming material inspection",
+        "f2": "In-line quality checks",
+        "f3": "Final inspection and AQL sampling",
+        "f4": "Defect tracking and classification",
+        "f5": "Quality audit management",
+        "f6": "Non-conformance handling",
+        "f7": "Quality reports and analytics",
+        "f8": "Supplier quality rating"
+      }
+    },
+    "hrm": {
+      "title": "HRM",
+      "subtitle": "Human Resource Management",
+      "description": "Employees, shifts, attendance, payroll, performance evaluation",
+      "features": {
+        "f1": "Employee database and profiles",
+        "f2": "Shift and schedule management",
+        "f3": "Attendance tracking and time cards",
+        "f4": "Payroll processing and calculations",
+        "f5": "Leave management system",
+        "f6": "Performance evaluation and KPIs",
+        "f7": "Training and skill tracking",
+        "f8": "Organizational structure management"
+      }
+    },
+    "accounting": {
+      "title": "Accounting",
+      "subtitle": "Financial Management",
+      "description": "Cost centers, costing models, IFRS/GAAP compliance, profit & loss",
+      "features": {
+        "f1": "General ledger management",
+        "f2": "Cost center accounting",
+        "f3": "Product costing models",
+        "f4": "Accounts payable and receivable",
+        "f5": "Financial reporting (P&L, Balance Sheet)",
+        "f6": "Budget planning and control",
+        "f7": "IFRS/GAAP compliance",
+        "f8": "Multi-currency support"
+      }
+    },
+    "procurement": {
+      "title": "Procurement",
+      "subtitle": "Supplier Management",
+      "description": "Purchase orders, supplier management, invoice matching, contracts",
+      "features": {
+        "f1": "Purchase requisition workflow",
+        "f2": "Purchase order management",
+        "f3": "Supplier database and evaluation",
+        "f4": "RFQ and quotation comparison",
+        "f5": "Contract management",
+        "f6": "Invoice matching (3-way match)",
+        "f7": "Supplier performance tracking",
+        "f8": "Procurement analytics and reports"
+      }
+    },
+    "sales": {
+      "title": "Sales & Pricing",
+      "subtitle": "Revenue Management",
+      "description": "Cost-based pricing, orders, invoices, wholesale/retail management",
+      "features": {
+        "f1": "Customer database and CRM",
+        "f2": "Sales order management",
+        "f3": "Cost-based pricing calculator",
+        "f4": "Quotation and proposal generation",
+        "f5": "Invoice generation and tracking",
+        "f6": "Wholesale and retail pricing",
+        "f7": "Sales commission tracking",
+        "f8": "Sales analytics and forecasting"
+      }
+    },
+    "dashboard": {
+      "title": "Analytics Dashboard",
+      "subtitle": "Management Intelligence",
+      "description": "KPIs, production efficiency, cost vs profit, real-time reports",
+      "features": {
+        "f1": "Real-time KPI monitoring and tracking",
+        "f2": "Cost vs Profit analysis and trends",
+        "f3": "Production efficiency metrics (OEE, throughput)",
+        "f4": "Employee productivity and utilization",
+        "f5": "Inventory turnover and stock levels",
+        "f6": "Machine performance and downtime tracking",
+        "f7": "Customizable dashboards and widgets",
+        "f8": "Automated alerts and notifications"
+      }
+    },
+    "mrp": {
+      "title": "MRP II",
+      "subtitle": "Material Requirement Planning",
+      "description": "Demand forecasting, master production scheduling, capacity planning, material requirements"
+    },
+    "cmms": {
+      "title": "CMMS",
+      "subtitle": "Maintenance Management",
+      "description": "Preventive maintenance, breakdown management, spare parts, MTBF/MTTR tracking"
+    }
+  },
+  "features": {
+    "title": "Enterprise-Grade Capabilities",
+    "subtitle": "Built for large-scale garment manufacturing operations with stringent requirements",
+    "modular": "Modular Architecture",
+    "modularDesc": "Flexible, scalable system designed for enterprise-grade manufacturing",
+    "security": "Enterprise Security",
+    "securityDesc": "Role-based access control, encryption, audit logs, compliance ready",
+    "ai": "AI & Analytics",
+    "aiDesc": "Demand forecasting, optimization, defect detection, anomaly detection",
+    "iot": "IoT Integration",
+    "iotDesc": "Real-time sensor data, machine connectivity, MQTT support"
+  },
+  "integration": {
+    "title": "Seamless Integration",
+    "subtitle": "Connected workflow from planning to profit",
+    "flow": "Design → Materials → Production → Quality → Costing → Sales",
+    "realtime": "Real-time",
+    "realtimeDesc": "Live visibility into every stage",
+    "connected": "Connected",
+    "connectedDesc": "Seamless data flow across departments",
+    "accurate": "Accurate",
+    "accurateDesc": "Eliminate errors with automated workflows"
+  },
+  "cta": {
+    "title": "Ready to Transform Your Manufacturing?",
+    "subtitle": "Start managing your entire garment manufacturing operation from a single, powerful platform today.",
+    "button": "Access Dashboard Now"
+  },
+  "footer": {
+    "brand": "ManufactureERP",
+    "tagline": "Enterprise garment manufacturing system",
+    "modules": "Modules",
+    "company": "Company",
+    "resources": "Resources",
+    "about": "About",
+    "documentation": "Documentation",
+    "support": "Support",
+    "apiDocs": "API Docs",
+    "security": "Security",
+    "compliance": "Compliance",
+    "copyright": "© 2024 ManufactureERP. All rights reserved."
+  },
+  "placeholder": {
+    "comingSoon": "Coming Soon",
+    "inDevelopment": "This module is currently under development. Continue prompting to help build out the detailed interface for {{moduleName}}.",
+    "backToHome": "Back to Home",
+    "viewDocs": "View Documentation"
+  },
+  "notFound": {
+    "message": "Oops! The page you're looking for doesn't exist."
+  }
+}

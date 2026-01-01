@@ -1,0 +1,469 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==================== SALES MODULE ====================
+
+model Buyer {
+  id                String   @id @default(uuid())
+  code              String   @unique
+  name              String
+  nameAr           String
+  companyName       String
+  companyNameAr    String
+  registrationNumber String?
+  taxId            String?
+  country          String
+  currency         String   @default("USD")
+  contactPerson    String
+  email            String
+  phone            String
+  address          String
+  city             String
+  postalCode       String?
+  website          String?
+  type             String   // wholesale, retail, export
+  status           String   @default("active") // active, inactive, suspended
+  creditLimit      Decimal  @default(0)
+  currentBalance   Decimal  @default(0)
+  paymentTerms     String
+  totalOrders      Int      @default(0)
+  totalRevenue     Decimal  @default(0)
+  avgOrderValue    Decimal  @default(0)
+  onTimePaymentRate Decimal @default(0)
+  lastOrderDate    DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  
+  salesOrders      SalesOrder[]
+  contracts        SalesContract[]
+  quotations       Quotation[]
+  invoices         Invoice[]
+  
+  @@index([code])
+  @@index([status])
+}
+
+model SalesOrder {
+  id                String   @id @default(uuid())
+  orderNumber       String   @unique
+  buyerId           String
+  buyerName         String
+  buyerCode         String
+  contractId        String?
+  contractNumber    String?
+  status            String   @default("draft") // draft, confirmed, in_production, ready, shipped, delivered, cancelled
+  orderDate         DateTime
+  requiredDate      DateTime
+  shippedDate       DateTime?
+  deliveredDate     DateTime?
+  subtotal          Decimal  @default(0)
+  discount          Decimal  @default(0)
+  tax               Decimal  @default(0)
+  shippingCost      Decimal  @default(0)
+  total             Decimal  @default(0)
+  currency          String   @default("USD")
+  shippingAddress   String
+  shippingMethod    String?
+  trackingNumber    String?
+  notes             String?
+  createdBy         String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  buyer             Buyer    @relation(fields: [buyerId], references: [id])
+  items             SalesOrderItem[]
+  productionOrderIds String[] @default([])
+  
+  @@index([buyerId])
+  @@index([status])
+  @@index([orderDate])
+}
+
+model SalesOrderItem {
+  id                String   @id @default(uuid())
+  salesOrderId      String
+  styleId           String
+  styleNumber       String
+  styleName         String
+  styleNameAr       String
+  colorId           String
+  colorCode         String
+  colorName         String
+  colorNameAr       String
+  sizeBreakdown     Json     // Array of {size: string, quantity: number}
+  quantity          Int      @default(0)
+  unitPrice         Decimal  @default(0)
+  discount          Decimal  @default(0)
+  total             Decimal  @default(0)
+  productionOrderId String?
+  productionStatus  String?  // not_started, in_production, completed
+  
+  salesOrder        SalesOrder @relation(fields: [salesOrderId], references: [id], onDelete: Cascade)
+  
+  @@index([salesOrderId])
+  @@index([styleId])
+}
+
+model SalesContract {
+  id                String   @id @default(uuid())
+  contractNumber    String   @unique
+  buyerId           String
+  buyerName         String
+  buyerCode         String
+  status            String   @default("draft") // draft, active, expired, terminated
+  startDate         DateTime
+  endDate           DateTime
+  totalValue        Decimal  @default(0)
+  currency          String   @default("USD")
+  paymentTerms      String
+  deliveryTerms     String
+  incoterms         String?
+  notes             String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  buyer             Buyer    @relation(fields: [buyerId], references: [id])
+  
+  @@index([buyerId])
+  @@index([status])
+}
+
+model Quotation {
+  id                String   @id @default(uuid())
+  quotationNumber   String   @unique
+  buyerId           String
+  buyerName         String
+  buyerCode         String
+  status            String   @default("draft") // draft, sent, accepted, rejected, expired
+  quotationDate     DateTime @default(now())
+  validUntil        DateTime
+  items             Json     // Array of quotation items
+  subtotal          Decimal  @default(0)
+  discount          Decimal  @default(0)
+  tax               Decimal  @default(0)
+  total             Decimal  @default(0)
+  currency          String   @default("USD")
+  notes             String?
+  createdBy         String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  buyer             Buyer    @relation(fields: [buyerId], references: [id])
+  
+  @@index([buyerId])
+  @@index([status])
+}
+
+model Invoice {
+  id                String   @id @default(uuid())
+  invoiceNumber     String   @unique
+  salesOrderId      String?
+  salesOrderNumber  String?
+  buyerId           String
+  buyerName         String
+  buyerCode         String
+  status            String   @default("draft") // draft, sent, paid, overdue, cancelled
+  invoiceDate       DateTime @default(now())
+  dueDate           DateTime
+  items             Json     // Array of invoice items
+  subtotal          Decimal  @default(0)
+  discount          Decimal  @default(0)
+  tax               Decimal  @default(0)
+  shippingCost      Decimal  @default(0)
+  total             Decimal  @default(0)
+  paidAmount        Decimal  @default(0)
+  outstandingAmount Decimal  @default(0)
+  currency          String   @default("USD")
+  notes             String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  buyer             Buyer    @relation(fields: [buyerId], references: [id])
+  
+  @@index([buyerId])
+  @@index([status])
+  @@index([invoiceDate])
+}
+
+// ==================== PRODUCTION MODULE ====================
+
+model ProductionOrder {
+  id                String   @id @default(uuid())
+  orderNumber       String   @unique
+  styleId           String?
+  styleNumber       String?
+  styleName         String?
+  styleNameAr       String?
+  quantity          Int      @default(0)
+  completedQuantity Int     @default(0)
+  unit              String   @default("pieces")
+  status            String   @default("draft") // draft, approved, in_progress, completed, cancelled
+  priority          String   @default("medium") // low, medium, high, urgent
+  startDate         DateTime?
+  endDate           DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  workOrders        WorkOrder[]
+  
+  @@index([status])
+  @@index([orderNumber])
+}
+
+model WorkOrder {
+  id                String   @id @default(uuid())
+  workOrderNumber   String   @unique
+  productionOrderId String
+  productionOrderNumber String
+  styleId           String
+  styleNumber       String
+  styleName         String
+  styleNameAr       String
+  stage             String   // cutting, sewing, finishing, packing
+  lineId            String?
+  lineName          String?
+  quantity          Int      @default(0)
+  completedQuantity Int     @default(0)
+  goodQuantity      Int     @default(0)
+  defectQuantity    Int     @default(0)
+  reworkQuantity    Int     @default(0)
+  unit              String   @default("pieces")
+  status            String   @default("pending") // pending, in_progress, paused, completed, cancelled
+  startTime         DateTime?
+  endTime           DateTime?
+  materials         Json     @default("[]") // Array of materials
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  productionOrder   ProductionOrder @relation(fields: [productionOrderId], references: [id])
+  
+  @@index([productionOrderId])
+  @@index([status])
+  @@index([stage])
+}
+
+// ==================== INVENTORY MODULE ====================
+
+model Warehouse {
+  id                String   @id @default(uuid())
+  code              String   @unique
+  name              String
+  nameAr           String
+  location          String
+  capacity          Decimal  @default(0)
+  usedCapacity      Decimal  @default(0)
+  type              String   // raw_materials, finished_goods, wip
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  stockItems        StockItem[]
+  
+  @@index([code])
+  @@index([isActive])
+}
+
+model RawMaterial {
+  id                String   @id @default(uuid())
+  code              String   @unique
+  name              String
+  nameAr           String
+  type              String   // fabric, trim, accessory, packaging
+  category          String?
+  unit              String
+  currentStock      Decimal  @default(0)
+  reservedStock     Decimal  @default(0)
+  availableStock    Decimal  @default(0)
+  minStock          Decimal  @default(0)
+  maxStock          Decimal  @default(0)
+  unitCost          Decimal  @default(0)
+  warehouseId       String?
+  warehouseName     String?
+  supplierId        String?
+  status            String   @default("active") // active, inactive
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  stockItems        StockItem[]
+  
+  @@index([code])
+  @@index([type])
+  @@index([status])
+}
+
+model StockItem {
+  id                String   @id @default(uuid())
+  materialId        String
+  warehouseId       String
+  quantity          Decimal  @default(0)
+  reservedQuantity  Decimal  @default(0)
+  availableQuantity Decimal  @default(0)
+  batchNumber       String?
+  expiryDate        DateTime?
+  location          String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  material          RawMaterial @relation(fields: [materialId], references: [id])
+  warehouse         Warehouse @relation(fields: [warehouseId], references: [id])
+  
+  @@index([materialId])
+  @@index([warehouseId])
+  @@index([batchNumber])
+}
+
+// ==================== QUALITY MODULE ====================
+
+model QualityInspection {
+  id                String   @id @default(uuid())
+  inspectionNumber  String   @unique
+  type              String   // incoming, inline, final
+  materialId        String?
+  materialCode      String?
+  materialName      String?
+  materialNameAr    String?
+  productionOrderId String?
+  productionOrderNumber String?
+  batchNumber       String?
+  quantity          Int      @default(0)
+  inspectedQuantity Int      @default(0)
+  acceptedQuantity  Int      @default(0)
+  rejectedQuantity  Int      @default(0)
+  status            String   @default("pending") // pending, in_progress, passed, failed, conditional
+  aqlLevel          String?
+  aqlResult         String?  // accepted, rejected
+  inspectorId       String
+  inspectorName     String
+  inspectionDate    DateTime @default(now())
+  defects           Json     @default("[]") // Array of defects
+  notes             String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([inspectionNumber])
+  @@index([type])
+  @@index([status])
+}
+
+// ==================== PLM MODULE ====================
+
+model Style {
+  id                String   @id @default(uuid())
+  styleNumber       String   @unique
+  name              String
+  nameAr           String
+  category          String   // tops, bottoms, dresses, outerwear, accessories
+  subcategory       String?
+  season            String
+  collection        String?
+  status            String   @default("concept") // concept, development, sampling, approved, production, discontinued
+  targetCost        Decimal  @default(0)
+  targetPrice       Decimal  @default(0)
+  designerId        String
+  designerName      String
+  currentVersion    Int      @default(1)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([styleNumber])
+  @@index([status])
+  @@index([category])
+}
+
+// ==================== HRM MODULE ====================
+
+model Employee {
+  id                String   @id @default(uuid())
+  employeeNumber    String   @unique
+  firstName         String
+  lastName          String
+  firstNameAr       String
+  lastNameAr        String
+  email             String   @unique
+  phone             String
+  dateOfBirth       DateTime?
+  gender            String?  // male, female
+  nationality       String?
+  nationalId        String?
+  employmentType    String   // full_time, part_time, contract, temporary
+  employmentStatus   String   @default("active") // active, on_leave, terminated, suspended
+  hireDate          DateTime
+  terminationDate   DateTime?
+  departmentId      String
+  departmentName    String
+  positionId        String
+  positionTitle     String
+  positionTitleAr   String
+  salary            Decimal  @default(0)
+  currency          String   @default("USD")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([employeeNumber])
+  @@index([employmentStatus])
+  @@index([departmentId])
+}
+
+// ==================== PROCUREMENT MODULE ====================
+
+model Supplier {
+  id                String   @id @default(uuid())
+  code              String   @unique
+  name              String
+  nameAr           String
+  companyName       String
+  companyNameAr     String
+  registrationNumber String
+  taxId             String
+  country           String
+  currency          String   @default("USD")
+  contactPerson     String
+  email             String
+  phone             String
+  address           String
+  city              String
+  type              String   // raw_materials, services, both
+  status            String   @default("active") // active, under_evaluation, suspended, blacklisted
+  rating            Decimal  @default(0)
+  paymentTerms      String
+  leadTimeDays      Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([code])
+  @@index([status])
+}
+
+model PurchaseOrder {
+  id                String   @id @default(uuid())
+  orderNumber       String   @unique
+  supplierId        String
+  supplierName      String
+  supplierCode      String
+  status            String   @default("draft") // draft, sent, confirmed, received, cancelled
+  orderDate         DateTime @default(now())
+  requiredDate      DateTime
+  receivedDate      DateTime?
+  items             Json     @default("[]") // Array of PO items
+  subtotal          Decimal  @default(0)
+  discount          Decimal  @default(0)
+  tax               Decimal  @default(0)
+  shippingCost      Decimal  @default(0)
+  total             Decimal  @default(0)
+  currency          String   @default("USD")
+  notes             String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([supplierId])
+  @@index([status])
+  @@index([orderNumber])
+}

@@ -1,0 +1,203 @@
+/** @import must precede all other statements */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 225 10% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 225 10% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 225 10% 15%;
+
+    --primary: 225 70% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 45 95% 50%;
+    --secondary-foreground: 225 10% 15%;
+
+    --muted: 210 14% 83%;
+    --muted-foreground: 215 13% 34%;
+
+    --accent: 45 95% 50%;
+    --accent-foreground: 225 10% 15%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 210 20% 90%;
+    --input: 210 14% 97%;
+    --ring: 225 70% 45%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 225 30% 96%;
+
+    --sidebar-foreground: 225 10% 30%;
+
+    --sidebar-primary: 225 70% 45%;
+
+    --sidebar-primary-foreground: 0 0% 100%;
+
+    --sidebar-accent: 45 95% 50%;
+
+    --sidebar-accent-foreground: 225 10% 15%;
+
+    --sidebar-border: 210 20% 85%;
+
+    --sidebar-ring: 225 70% 45%;
+
+    --font-sans: "Inter", sans-serif;
+    --font-arabic: "Noto Sans Arabic", "Inter", sans-serif;
+  }
+
+  .dark {
+    --background: 225 14% 10%;
+    --foreground: 0 0% 95%;
+
+    --card: 225 14% 14%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 225 14% 14%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 225 80% 55%;
+    --primary-foreground: 225 10% 10%;
+
+    --secondary: 45 95% 50%;
+    --secondary-foreground: 225 10% 15%;
+
+    --muted: 225 13% 30%;
+    --muted-foreground: 210 14% 68%;
+
+    --accent: 45 95% 50%;
+    --accent-foreground: 225 10% 15%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 225 20% 25%;
+    --input: 225 20% 20%;
+    --ring: 225 80% 55%;
+    --sidebar-background: 225 14% 12%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 225 80% 55%;
+    --sidebar-primary-foreground: 225 10% 10%;
+    --sidebar-accent: 45 95% 50%;
+    --sidebar-accent-foreground: 225 10% 15%;
+    --sidebar-border: 225 20% 25%;
+    --sidebar-ring: 225 80% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+
+  :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  pre,
+  code {
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  /* RTL Support */
+  html[dir="rtl"] {
+    direction: rtl;
+  }
+
+  html[dir="ltr"] {
+    direction: ltr;
+  }
+
+  /* Arabic font support */
+  html.font-arabic,
+  html.font-arabic body,
+  html[dir="rtl"],
+  html[dir="rtl"] body {
+    font-family: var(--font-arabic);
+  }
+
+  /* RTL specific spacing adjustments */
+  html[dir="rtl"] .gap-2 > :not(:last-child) {
+    margin-left: 0.5rem;
+    margin-right: 0;
+  }
+
+  /* Flip icons in RTL */
+  html[dir="rtl"] .rtl-flip {
+    transform: scaleX(-1);
+  }
+
+  /* RTL text alignment */
+  html[dir="rtl"] .text-left {
+    text-align: right;
+  }
+
+  html[dir="rtl"] .text-right {
+    text-align: left;
+  }
+}
+
+/* RTL utilities */
+@layer utilities {
+  .start-0 {
+    inset-inline-start: 0;
+  }
+
+  .end-0 {
+    inset-inline-end: 0;
+  }
+
+  .ms-auto {
+    margin-inline-start: auto;
+  }
+
+  .me-auto {
+    margin-inline-end: auto;
+  }
+
+  .ps-4 {
+    padding-inline-start: 1rem;
+  }
+
+  .pe-4 {
+    padding-inline-end: 1rem;
+  }
+
+  .border-s {
+    border-inline-start-width: 1px;
+  }
+
+  .border-e {
+    border-inline-end-width: 1px;
+  }
+
+  /* Arabic specific text styles */
+  .arabic-text {
+    font-family: var(--font-arabic);
+    line-height: 1.8;
+  }
+}
