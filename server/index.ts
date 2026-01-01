@@ -1,4 +1,11 @@
-import "dotenv/config";
+// Load environment variables
+if (typeof process !== 'undefined' && process.env) {
+  try {
+    require('dotenv/config');
+  } catch (e) {
+    // dotenv not available in serverless environment
+  }
+}
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";

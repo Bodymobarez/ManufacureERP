@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     outDir: "dist/spa",
+    emptyOutDir: true,
   },
   optimizeDeps: {
     include: ["i18next", "react-i18next"],
