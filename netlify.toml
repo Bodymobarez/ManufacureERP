@@ -1,15 +1,24 @@
 [build]
-  command = "npm run build:client"
+  command = "pnpm db:generate && pnpm build:client"
   functions = "netlify/functions"
   publish = "dist/spa"
 
+[build.environment]
+  NODE_VERSION = "20"
+  PNPM_VERSION = "10"
 
 [functions]
-  external_node_modules = ["express"]
+  external_node_modules = ["express", "cors", "@prisma/client", "pg", "serverless-http"]
   node_bundler = "esbuild"
+  included_files = ["prisma/schema.prisma"]
   
 [[redirects]]
   force = true
   from = "/api/*"
   status = 200
   to = "/.netlify/functions/api/:splat"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
